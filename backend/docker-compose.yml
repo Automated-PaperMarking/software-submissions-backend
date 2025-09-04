@@ -1,0 +1,42 @@
+version: '3.8'
+services:
+  redis:
+    image: redis:7
+    ports:
+      - '6379:6379'
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+
+  # judge0:
+  #   # Production: use Judge0 CE compose. For PoC, assume you have an API image available.
+  #   image: judge0/api:latest
+  #   environment:
+  #     JUDGE0_TOKEN: changeme
+  #   ports:
+  #     - '2358:2358'
+  #   # If running official judge0 CE, add required volumes and DB service per their README.
+
+  # code-runner:
+  #   build: .
+  #   environment:
+  #     RABBITMQ_URL: amqp://guest:guest@rabbitmq:5672
+  #     REDIS_URL: redis://redis:6379/0
+  #     JUDGE0_URL: http://judge0:2358
+  #     JUDGE0_TOKEN: changeme
+  #     WORKER_PREFETCH: 5
+  #     WORKER_CONCURRENCY: 5
+  #     WORKER_POLL_INTERVAL_MS: 500
+  #     WORKER_POLL_MAX_ATTEMPTS: 120
+  #   ports:
+  #     - '3000:3000'
+  #   depends_on:
+  #     - rabbitmq
+  #     - redis
+  #     - judge0
